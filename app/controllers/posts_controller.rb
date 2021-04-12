@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :show, only: %i[show update edit destroy]
+  before_action :set_post, only: %i[show update edit destroy]
   def index
     @posts = Post.all.order('created_at DESC')
   end
@@ -30,17 +30,17 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
     @post.destroy
-
     redirect_to posts_path
   end
 
-  def show
-    @post = Post.find(params[:id])
-  end
+  def show; end
 
   private
+
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
   def post_params
     params.require(:post).permit(:title, :content)
